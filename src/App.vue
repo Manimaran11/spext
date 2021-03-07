@@ -30,14 +30,8 @@
     <div id="album-play" class="album-player card" @mouseover="shuffle1">
       <div class="flex-container album-player-container">
         <div class="play-left-container">
-          <img            
-            class="player-options"
-            :src="images.shuffle"
-          />
-          <img            
-            class="player-options"
-            :src="images.loop_all"
-          />
+          <img class="player-options" :src="images.shuffle" />
+          <img class="player-options" :src="images.loop_all" />
         </div>
         <div class="play-middle-container flex-container">
           <div class="player-options player-next-container album-action-circle">
@@ -54,19 +48,13 @@
           </div>
         </div>
         <div class="play-end-container">
-          <img            
-            class="player-options"
-            :src="images.loop"
-          />
-          <img            
-            class="player-options"
-            :src="images.playlist"
-          />
+          <img class="player-options" :src="images.loop" />
+          <img class="player-options" :src="images.playlist" />
         </div>
       </div>
 
       <div id="app1">
-        <audio-player playerid="audio-player"> </audio-player>
+        <audio-player :url="urls" playerid="audio-player"> </audio-player>
       </div>
     </div>
   </div>
@@ -77,6 +65,8 @@
 </style>
 
 <script>
+const arr = [require("./assets/songs/01.BeatifulPeople.mp3"), require("./assets/songs/song1.mp3"), require("./assets/songs/song2.mp3")
+,require("./assets/songs/song3.mp3"),require("./assets/songs/song4.mp3")];
 export default {
   name: "app",
   data() {
@@ -85,6 +75,7 @@ export default {
       song_title: "Purple Haze",
       artist: "Jimi Hendix",
       artist2: "Woodstock",
+      urls: arr,
       liked: true,
       theParent: null,
       images: {

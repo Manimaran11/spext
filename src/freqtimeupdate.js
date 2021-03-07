@@ -27,7 +27,7 @@
   
           // Wrappers around setInterval and clearInterval to ensure one interval per audio
           setInterval = function() {
-              if (!this.hasOwnProperty('_interval')) {
+              if (!Object.prototype.hasOwnProperty.call(this,'_interval')) {
                   this._interval = global.setInterval(intervalFunc.bind(this), frequency);
               }
           },
@@ -59,5 +59,5 @@
           audios[i].addEventListener('emptied', clearInterval);
           audios[i].addEventListener('ended', clearInterval);
           audios[i].addEventListener('pause', clearInterval);
-      };
+      }
   })(window);

@@ -1,5 +1,11 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-// import '@/assets/styles/styles.css'
+import AudioPlayer from './components/AudioPlayer.vue'
 
-createApp(App).mount('#app')
+// Vue.component('audio-player', AudioPlayer);
+
+var app = createApp(App);
+app.component('audio-player',AudioPlayer)
+app.mount("#app")
+
+require('./freqtimeupdate.js')
