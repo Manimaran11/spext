@@ -32,8 +32,8 @@
 
 .album-player {
 	width: 50%;
-	height: 200px;
-	margin-top: 80px;
+	height: 250px;
+	margin-top: 60px;
 	margin-left: -40px;
 	border: 1px solid #FFFFFF;
 	box-sizing: border-box;
@@ -251,39 +251,6 @@ box-shadow: 0px 3px 5px rgba(98, 75, 242, 0.63), inset 10px 10px 15px rgba(255, 
 	color: #AEAEAE;
 }
 
-#seek-bar {
-	width: 250px;
-	height: 8px;
-	background-color: #DEDDE3;
-	box-shadow: -3px -3px 5px #FFFFFF, 3px 3px 5px rgba(0, 0, 0, 0.05), inset 3px 3px 5px rgba(0, 0, 0, 0.05), inset -3px -3px 5px #FFFFFF;
-	display: flex;
-	border-radius: 50px;
-	margin-left: 25px;
-	cursor: pointer;
-}
-
-#fill {
-	height: 20px;
-	width: 20px;
-	display: flex;
-	margin-top: -6px;
-	margin-left: 4px;
-	background: linear-gradient(327.56deg, #F8F8F8 19.23%, #F8F8F8 81.76%);
-	box-shadow: 0px 3px 5px rgba(98, 75, 242, 0.63), inset 10px 10px 15px rgba(255, 255, 255, 0.2);
-	background-color: #F8F8F8;
-	border-radius: 20px;
-}
-
-#handle {
-	width: 6px;
-	height: 6px;
-	background-color: #5D24D6;
-	box-shadow: 0px 1px 1px rgb(98 75 242 / 63%), inset 8px 8px 8px rgb(255 255 255 / 20%);
-	border-radius: 50%;
-	margin: auto;
-	transform: scale(2);
-}
-
 .album-player-container{
 	justify-content: space-evenly;
     width: 80%;
@@ -339,6 +306,17 @@ box-shadow: 0px 3px 5px rgba(98, 75, 242, 0.63), inset 10px 10px 15px rgba(255, 
 	width: 50px;height: 50px;background-image: url(../images/pause.svg);
 	background-repeat: no-repeat;
 	background-position: center;
+	/* -webkit-transition: all .5s linear;
+	transition: all 1s linear; */
+	background-size: 50% 50%;
+}
+
+.player-pause{
+	width: 50px;height: 50px;background-image: url(../images/play.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+	/* -webkit-transition: all .5s linear;
+	transition: all 1s linear; */
 	background-size: 50% 50%;
 }
 
@@ -346,80 +324,9 @@ box-shadow: 0px 3px 5px rgba(98, 75, 242, 0.63), inset 10px 10px 15px rgba(255, 
     height: 45px
 }
 
-input[type="range"] {
-    margin: auto;
-    -webkit-appearance: none;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    cursor: pointer;
-    outline: none;
-    border-radius: 0; /* iOS */
-    background: transparent;
-}
-
-input[type="range"]:focus {
-    outline: none;
-}
-
-::-webkit-slider-runnable-track {
-    background: #fff;
-}
-
-/*
- * 1. Set to 0 width and remove border for a slider without a thumb
- */
-::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 0; /* 1 */
-    height: 40px;
-    background: #fff;
-    box-shadow: -100vw 0 0 100vw dodgerblue; 
-    border: none; /* 2px solid #999; */
-}
-
-::-moz-range-track {
-    height: 40px;
-    background: #ddd;
-}
-
-::-moz-range-thumb {
-    background: #fff;
-    height: 40px;
-    width: 0; /* 20px; */
-    border: none; /* 3px solid #999; */
-    border-radius: 0 !important;
-    box-shadow: -100vw 0 0 100vw dodgerblue; 
-    box-sizing: border-box;
-}
-
-::-ms-fill-lower {
-    background: dodgerblue;
-}
-
-::-ms-thumb {
-    background: #fff;
-    border: 2px solid #999;
-    height: 40px;
-    width: 20px;
-    box-sizing: border-box;
-}
-
-::-ms-ticks-after {
-    display: none;
-}
-
-::-ms-ticks-before {
-    display: none;
-}
-
-::-ms-track {
-    background: #ddd;
-    color: transparent;
-    height: 40px;
-    border: none;
-}
-
-::-ms-tooltip {
-    display: none;
+.audio-container{
+	width: 80%;
+margin-left: auto;
+margin-right: auto;
+margin-top: 40px;
 }

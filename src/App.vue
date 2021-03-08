@@ -41,11 +41,13 @@
             <div class="purp-circle player-prev"></div>
           </div>
           <div
-            @click="playpause"
+            @click="playpause"            
             class="player-options album-action-circle"
             style="width: 65px; height: 65px"
           >
-            <div class="player-play purp-circle"></div>
+            <div 
+            :class="[playing ? 'player-play' : 'player-pause']"
+            class="purp-circle"></div>
           </div>
           <div
             @click="playnext"
@@ -60,8 +62,8 @@
         </div>
       </div>
 
-      <div id="app1">
-        <audio-player ref="audioComponent" :url="urls" playerid="audio-player">
+      <div id="app1" class="audio-container">
+        <audio-player @audio-ended="playnext" ref="audioComponent" :url="urls" playerid="audio-player">
         </audio-player>
       </div>
     </div>
@@ -92,6 +94,7 @@ export default {
       urls: arr,
       currPlayInd: 0,
       liked: true,
+      playing: false,
       theParent: null,
       images: {
         codex: require("./assets/images/codex-omega.png"),
@@ -125,11 +128,13 @@ export default {
       this.theParent.classList.remove("ahover");
     },
     playpause: function () {
-      console.log("called playpause", this.$refs);
+      // console.log("called playpause", this.$refs);
+      this.playing = !this.playing
       this.$refs.audioComponent.toggleAudio();
     },
     playnext: function () {
-      console.log(this.currPlayInd)
+      console.log(this.currPlayInd,this.playing,this.currPlayInd)
+      
       if (this.currPlayInd <= this.urls.length - 2) {
         this.currPlayInd++;
         this.$refs.audioComponent.playThis(this.currPlayInd);

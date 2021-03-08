@@ -2,90 +2,28 @@
   <div id="audio-player-root">
     <!-- Hide the default audio player -->
     <div>
-      <audio style="display: none" ref="player" :id="playerid">
+      <audio v-on:ended="onEnd" style="display: none" ref="player" :id="playerid">
         <source :src="currUrl" type="audio/mpeg" />
       </audio>
     </div>
+    <input
+      class="slider"
+      v-model="playbackTime"
+      type="range"
+      min="0"
+      :max="audioDuration"
+      id="position"
+      name="position"
+    />
 
     <div
-      class="w-3/4 max-w-5xl bg-gray-200 border border-gray-300 px-2 pt-2 mt-4 shadow-md"
-      style="margin: auto"
+      v-show="audioLoaded"
+      class="flex w-full justify-between absolute top-0 bottom-0 right-0 left-0 px-2 pointer-events-none"
     >
-      <div id="player-row" class="inline-flex flex-wrap w-full">
-        <div id="button-div" class="flex-initial pr-3">
-          <svg
-            @click="toggleAudio()"
-            v-show="!isPlaying"
-            class="play-button text-gray-400"
-            :class="{
-              'text-orange-600': audioLoaded,
-              'hover:text-orange-400': audioLoaded,
-              'cursor-pointer': audioLoaded,
-            }"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-              clip-rule="evenodd"
-            />
-          </svg>
-          <svg
-            @click="toggleAudio()"
-            v-show="isPlaying"
-            class="play-button text-orange-400 hover:text-orange-400 cursor-pointer"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </div>
+      <span class="text-sm" style="color: #94bcec" v-html="elapsedTime()">
+      </span>
 
-        <div
-          id="progress-bar"
-          class="flex-grow bg-white border border-blue-200"
-        >
-          <div class="overlay-container relative w-full h-full">
-            <input
-              v-model="playbackTime"
-              type="range"
-              min="0"
-              :max="audioDuration"
-              class="slider w-full h-full"
-              id="position"
-              name="position"
-            />
-
-            <!-- Show loading indicator until audio has been loaded -->
-
-            <div
-              v-show="!audioLoaded"
-              class="w-full absolute top-0 bottom-0 right-0 left-0 px-2 pointer-events-none"
-              style="color: #94bcec"
-            >
-              Loading please wait...
-            </div>
-
-            <div
-              v-show="audioLoaded"
-              class="flex w-full justify-between absolute top-0 bottom-0 right-0 left-0 px-2 pointer-events-none"
-            >
-              <span class="text-sm" style="color: #94bcec" v-html="elapsedTime()">
-              </span>
-
-              <span class="text-sm" style="color: #94bcec" v-html="totalTime()">
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <span class="text-sm" style="color: #94bcec" v-html="totalTime()"> </span>
     </div>
 
     <!-- outer gray border -->
@@ -150,6 +88,8 @@ export default {
       //console.log(audio);
       if (audio) {
         var seconds = audio.currentTime;
+        this.setCSSProperty();
+        // audioPlayerContainer.style.setProperty('--seek-before-width', `${seekSlider.value / seekSlider.max * 100}%`);
         return this.convertTime(seconds);
       } else {
         return "00:00";
@@ -195,7 +135,7 @@ export default {
     toggleAudio() {
       var audio = this.$refs.player;
       // var audio1 = document.getElementById("audio-player");
-    // //console.log(audio,audio1)
+      // //console.log(audio,audio1)
       if (audio.paused) {
         audio.play();
         this.isPlaying = true;
@@ -204,15 +144,26 @@ export default {
         this.isPlaying = false;
       }
     },
-    playThis(ind){
-      console.log(ind)
-      this.$refs.player.pause()  ;
-      this.isPlaying = false;  
+    playThis(ind) {
+      console.log(ind);
+      this.$refs.player.pause();
+      this.isPlaying = false;
       this.currUrl = this.url[ind];
-      this.$refs.player.load()
-      this.initSlider()
-      this.toggleAudio()
-    },  
+      this.$refs.player.load();
+      this.initSlider();
+      this.toggleAudio();
+    },
+    setCSSProperty() {
+      let inputElement = document.getElementById("position");
+      const percent =
+        ((inputElement.value - inputElement.min) /
+          (inputElement.max - inputElement.min)) *
+        100;
+      inputElement.style.setProperty("--webkitProgressPercent", `${percent}%`);  
+    },
+    onEnd() {
+      this.$emit('audio-ended')
+    }
   },
   mounted: function () {
     // nextTick code will run only after the entire view has been rendered
@@ -269,86 +220,90 @@ export default {
 </script>
 
 <style>
-/* Play/Pause Button */
-.play-button {
-  height: 45px;
-}
-
-input[type="range"] {
+.slider {
+  -webkit-appearance: none; /* Override default CSS styles */
+  appearance: none;
+  outline: none; /* Remove outline */
   margin: auto;
-  -webkit-appearance: none;
-  position: relative;
-  overflow: hidden;
   width: 100%;
-  cursor: pointer;
-  outline: none;
-  border-radius: 0; /* iOS */
-  background: transparent;
+  border-radius: 15px;
+  height: 13px;
+  --webkitProgressPercent: 0%;
+  -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
+  /* transition: opacity .2s; */
 }
-
-input[type="range"]:focus {
-  outline: none;
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
 }
-
-::-webkit-slider-runnable-track {
-  background: #fff;
-}
-
-/*
- * 1. Set to 0 width and remove border for a slider without a thumb
- */
-::-webkit-slider-thumb {
+.slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 0; /* 1 */
-  height: 40px;
-  background: #fff;
-  box-shadow: -100vw 0 0 100vw dodgerblue;
-  border: none; /* 2px solid #999; */
+  box-sizing: content-box;
+  border: 4px solid #fff;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background-color: #5d24d6;
+  background: linear-gradient(327.56deg, #5d24d6 19.23%, #7e74ed 81.76%);
+  box-shadow: 0px 3px 5px rgba(98, 75, 242, 0.63),
+    inset 10px 10px 15px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  margin: -8px 0 0 0;
+}
+.slider::-moz-range-thumb {
+  -webkit-appearance: none;
+  box-sizing: content-box;
+  border: 7px solid #fff;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background-color: #5d24d6;
+  background: linear-gradient(327.56deg, #5d24d6 19.23%, #7e74ed 81.76%);
+  box-shadow: 2px 3px 5px rgba(98, 75, 242, 0.63),
+    inset 10px 10px 15px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  margin: 0px 0 0 0;
 }
 
-::-moz-range-track {
-  height: 40px;
-  background: #ddd;
+input[type="range"]::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  background-image: linear-gradient(
+    90deg,
+    #5d24d6 var(--webkitProgressPercent),
+    #dedde3 var(--webkitProgressPercent)
+  );
+  width: 100%;
+  height: 10px;
+  border-radius: 20px;
+  cursor: pointer;  
+  box-shadow: -3px -3px 5px #ffffff, 3px 3px 5px rgba(0, 0, 0, 0.05),
+    inset 3px 3px 5px rgba(0, 0, 0, 0.05), inset -3px -3px 5px #ffffff;
 }
 
-::-moz-range-thumb {
-  background: #fff;
-  height: 40px;
-  width: 0; /* 20px; */
-  border: none; /* 3px solid #999; */
-  border-radius: 0 !important;
-  box-shadow: -100vw 0 0 100vw dodgerblue;
-  box-sizing: border-box;
+/** FF*/
+input[type="range"]::-moz-range-progress {
+  background-color: #5d24d6;
+  width: 100%;
+  height: 7px;
+  border-radius: 20px;  
+  box-shadow: 0px 3px 5px rgba(98, 75, 242, 0.63),
+    inset 10px 10px 15px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
 }
-
-::-ms-fill-lower {
-  background: dodgerblue;
+input[type="range"]::-moz-range-track {
+  background-color: #dedde3;
+  box-shadow: -3px -3px 5px #ffffff, 3px 3px 5px rgba(0, 0, 0, 0.05),
+    inset 3px 3px 5px rgba(0, 0, 0, 0.05), inset -3px -3px 5px #ffffff;
+  width: 100%;
+  height: 5px;
+  border-radius: 20px;
+  cursor: pointer;
+  padding: 5px 4px;
 }
-
-::-ms-thumb {
-  background: #fff;
-  border: 2px solid #999;
-  height: 40px;
-  width: 20px;
-  box-sizing: border-box;
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+  background-color: #5d24d6;
 }
-
-::-ms-ticks-after {
-  display: none;
-}
-
-::-ms-ticks-before {
-  display: none;
-}
-
-::-ms-track {
-  background: #ddd;
-  color: transparent;
-  height: 40px;
-  border: none;
-}
-
-::-ms-tooltip {
-  display: none;
+input[type="range"]::-ms-fill-upper {
+  background-color: #9a905d;
 }
 </style>
