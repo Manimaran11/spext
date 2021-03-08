@@ -31,39 +31,51 @@
       <div class="flex-container album-player-container">
         <div class="play-left-container">
           <img class="player-options" :src="images.shuffle" />
-          <img class="player-options" :src="images.loop_all" />
+          <img class="player-options" @click="loopAll = !loopAll" :src="[loopAll ? images.loop_all_active : images.loop_all ]" />
         </div>
         <div class="play-middle-container flex-container">
           <div
             @click="playprev"
             class="player-options player-next-container album-action-circle"
           >
-            <div class="purp-circle player-prev"></div>
+            <div
+              :class="{ disabled: !loopAll && currPlayInd == 0 }"
+              class="purp-circle player-prev"
+            ></div>
           </div>
           <div
-            @click="playpause"            
+            @click="playpause"
             class="player-options album-action-circle"
             style="width: 65px; height: 65px"
           >
-            <div 
-            :class="[playing ? 'player-play' : 'player-pause']"
-            class="purp-circle"></div>
+            <div
+              :class="[playing ? 'player-play' : 'player-pause']"
+              class="purp-circle"
+            ></div>
           </div>
           <div
             @click="playnext"
             class="player-options player-next-container album-action-circle"
           >
-            <div class="purp-circle player-next"></div>
+            <div
+              :class="{ disabled: !loopAll && currPlayInd == urls.length - 1 }"
+              class="purp-circle player-next"
+            ></div>
           </div>
         </div>
         <div class="play-end-container">
-          <img class="player-options" :src="images.loop" />
+          <img class="player-options" @click="loopCurr = !loopCurr" :src="[loopCurr ? images.loop_active : images.loop]" />
           <img class="player-options" :src="images.playlist" />
         </div>
       </div>
 
       <div id="app1" class="audio-container">
-        <audio-player @audio-ended="playnext" ref="audioComponent" :url="urls" playerid="audio-player">
+        <audio-player
+          @audio-ended="audioDone"
+          ref="audioComponent"
+          :url="urls"
+          playerid="audio-player"
+        >
         </audio-player>
       </div>
     </div>
@@ -75,7 +87,6 @@
 </style>
 
 <script>
-
 const arr = [
   require("./assets/songs/01.BeatifulPeople.mp3"),
   require("./assets/songs/song1.mp3"),
@@ -92,6 +103,8 @@ export default {
       artist: "Jimi Hendix",
       artist2: "Woodstock",
       urls: arr,
+      loopAll: false,
+      loopCurr: false,
       currPlayInd: 0,
       liked: true,
       playing: false,
@@ -100,7 +113,9 @@ export default {
         codex: require("./assets/images/codex-omega.png"),
         shuffle: require("./assets/images/shuffle.svg"),
         loop: require("./assets/images/loop.svg"),
+        loop_active: require("./assets/images/loop-active.svg"),
         loop_all: require("./assets/images/loop-all.svg"),
+        loop_all_active: require("./assets/images/loop-all-active.svg"),
         playlist: require("./assets/images/playlist.svg"),
       },
     };
@@ -129,23 +144,37 @@ export default {
     },
     playpause: function () {
       // console.log("called playpause", this.$refs);
-      this.playing = !this.playing
+      this.playing = !this.playing;      
       this.$refs.audioComponent.toggleAudio();
     },
-    playnext: function () {
-      console.log(this.currPlayInd,this.playing,this.currPlayInd)
-      
+    playnext: function () {      
+      if(this.loopAll && this.currPlayInd == this.urls.length-1){
+        this.currPlayInd = -1;
+      }
       if (this.currPlayInd <= this.urls.length - 2) {
         this.currPlayInd++;
         this.$refs.audioComponent.playThis(this.currPlayInd);
+        this.playing = true;
+      } else {
+        this.playing = false;
       }
     },
     playprev: function () {
+       if(this.loopAll && this.currPlayInd == 0){
+        this.currPlayInd = this.urls.length;
+      }
       if (this.currPlayInd >= 1) {
         this.currPlayInd--;
         this.$refs.audioComponent.playThis(this.currPlayInd);
+        this.playing = true;
       }
     },
+    audioDone(){
+      if(this.loopCurr){
+        this.currPlayInd--;
+      }
+      this.playnext()
+    }
   },
 };
 </script>

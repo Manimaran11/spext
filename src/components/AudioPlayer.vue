@@ -18,12 +18,13 @@
 
     <div
       v-show="audioLoaded"
-      class="flex w-full justify-between absolute top-0 bottom-0 right-0 left-0 px-2 pointer-events-none"
+      class="flex-container"
+      style="justify-content:space-between;margin-top: 12px;color:#AA9BBE"
     >
-      <span class="text-sm" style="color: #94bcec" v-html="elapsedTime()">
+      <span class="text-sm" v-html="elapsedTime()">
       </span>
 
-      <span class="text-sm" style="color: #94bcec" v-html="totalTime()"> </span>
+      <span class="text-sm"  v-html="totalTime()"> </span>
     </div>
 
     <!-- outer gray border -->
@@ -150,8 +151,8 @@ export default {
       this.isPlaying = false;
       this.currUrl = this.url[ind];
       this.$refs.player.load();
-      this.initSlider();
       this.toggleAudio();
+      this.initSlider();
     },
     setCSSProperty() {
       let inputElement = document.getElementById("position");
@@ -162,6 +163,7 @@ export default {
       inputElement.style.setProperty("--webkitProgressPercent", `${percent}%`);  
     },
     onEnd() {
+      this.isPlaying = false;
       this.$emit('audio-ended')
     }
   },

@@ -257,12 +257,12 @@ box-shadow: 0px 3px 5px rgba(98, 75, 242, 0.63), inset 10px 10px 15px rgba(255, 
     margin-left: auto;
     margin-right: auto;
     margin-top: 40px;
-	align-items: center;
+	align-items: center;	
 }
 
 .play-left-container{
 	justify-self: flex-start;
-	margin:0px 20px;
+	margin:0px 20px;		
 
 }
 
@@ -281,6 +281,7 @@ box-shadow: 0px 3px 5px rgba(98, 75, 242, 0.63), inset 10px 10px 15px rgba(255, 
 	padding: 0px 3px;    
     margin: 0px 10px;
 	width:20px;
+	cursor: pointer;
 }
 
 .player-next-container{
@@ -329,4 +330,9 @@ box-shadow: 0px 3px 5px rgba(98, 75, 242, 0.63), inset 10px 10px 15px rgba(255, 
 margin-left: auto;
 margin-right: auto;
 margin-top: 40px;
+}
+
+.disabled{
+	background-color: gray;
+	pointer-events: none !important;
 }
