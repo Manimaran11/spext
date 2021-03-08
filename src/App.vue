@@ -34,16 +34,23 @@
           <img class="player-options" :src="images.loop_all" />
         </div>
         <div class="play-middle-container flex-container">
-          <div class="player-options player-next-container album-action-circle">
+          <div
+            @click="playprev"
+            class="player-options player-next-container album-action-circle"
+          >
             <div class="purp-circle player-prev"></div>
           </div>
           <div
+            @click="playpause"
             class="player-options album-action-circle"
             style="width: 65px; height: 65px"
           >
             <div class="player-play purp-circle"></div>
           </div>
-          <div class="player-options player-next-container album-action-circle">
+          <div
+            @click="playnext"
+            class="player-options player-next-container album-action-circle"
+          >
             <div class="purp-circle player-next"></div>
           </div>
         </div>
@@ -54,7 +61,8 @@
       </div>
 
       <div id="app1">
-        <audio-player :url="urls" playerid="audio-player"> </audio-player>
+        <audio-player ref="audioComponent" :url="urls" playerid="audio-player">
+        </audio-player>
       </div>
     </div>
   </div>
@@ -65,8 +73,14 @@
 </style>
 
 <script>
-const arr = [require("./assets/songs/01.BeatifulPeople.mp3"), require("./assets/songs/song1.mp3"), require("./assets/songs/song2.mp3")
-,require("./assets/songs/song3.mp3"),require("./assets/songs/song4.mp3")];
+
+const arr = [
+  require("./assets/songs/01.BeatifulPeople.mp3"),
+  require("./assets/songs/song1.mp3"),
+  require("./assets/songs/song2.mp3"),
+  require("./assets/songs/song3.mp3"),
+  require("./assets/songs/song4.mp3"),
+];
 export default {
   name: "app",
   data() {
@@ -76,6 +90,7 @@ export default {
       artist: "Jimi Hendix",
       artist2: "Woodstock",
       urls: arr,
+      currPlayInd: 0,
       liked: true,
       theParent: null,
       images: {
@@ -108,6 +123,23 @@ export default {
       }
       this.theParent.classList.add("bhover");
       this.theParent.classList.remove("ahover");
+    },
+    playpause: function () {
+      console.log("called playpause", this.$refs);
+      this.$refs.audioComponent.toggleAudio();
+    },
+    playnext: function () {
+      console.log(this.currPlayInd)
+      if (this.currPlayInd <= this.urls.length - 2) {
+        this.currPlayInd++;
+        this.$refs.audioComponent.playThis(this.currPlayInd);
+      }
+    },
+    playprev: function () {
+      if (this.currPlayInd >= 1) {
+        this.currPlayInd--;
+        this.$refs.audioComponent.playThis(this.currPlayInd);
+      }
     },
   },
 };

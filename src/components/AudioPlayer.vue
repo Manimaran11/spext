@@ -128,7 +128,7 @@ export default {
       const format = (val) => `0${Math.floor(val)}`.slice(-2);
       // var hours = seconds / 3600;
       var minutes = (seconds % 3600) / 60;
-      console.log(format, minutes);
+      //console.log(format, minutes);
 
       return [minutes, seconds % 60].map(format).join(":");
     },
@@ -147,7 +147,7 @@ export default {
     //Display the audio time elapsed so far
     elapsedTime() {
       var audio = this.$refs.player;
-      console.log(audio);
+      //console.log(audio);
       if (audio) {
         var seconds = audio.currentTime;
         return this.convertTime(seconds);
@@ -163,7 +163,7 @@ export default {
       //Sync local 'playbackTime' var to audio.currentTime and update global state
       this.playbackTime = audio.currentTime;
 
-      //console.log("update: " + audio.currentTime);
+      ////console.log("update: " + audio.currentTime);
 
       //Add listeners for audio pause and audio end events
       audio.addEventListener("ended", this.endListener);
@@ -185,17 +185,17 @@ export default {
     //Remove listeners after audio play stops
     cleanupListeners() {
       var audio = this.$refs.player;
-      console.log(audio);
+      //console.log(audio);
       audio.removeEventListener("freqtimeupdate", this.playbackListener);
       audio.removeEventListener("ended", this.endListener);
       audio.removeEventListener("pause", this.pauseListener);
 
-      //console.log("All cleaned up!");
+      ////console.log("All cleaned up!");
     },
     toggleAudio() {
       var audio = this.$refs.player;
-      var audio1 = document.getElementById("audio-player");
-    console.log(audio,audio1)
+      // var audio1 = document.getElementById("audio-player");
+    // //console.log(audio,audio1)
       if (audio.paused) {
         audio.play();
         this.isPlaying = true;
@@ -204,12 +204,21 @@ export default {
         this.isPlaying = false;
       }
     },
+    playThis(ind){
+      console.log(ind)
+      this.$refs.player.pause()  ;
+      this.isPlaying = false;  
+      this.currUrl = this.url[ind];
+      this.$refs.player.load()
+      this.initSlider()
+      this.toggleAudio()
+    },  
   },
   mounted: function () {
     // nextTick code will run only after the entire view has been rendered
     this.$nextTick(function () {
       var audio = this.$refs.player;
-      console.log(audio)
+      //console.log(audio)
       //Wait for audio to load, then run initSlider() to get audio duration and set the max value of our slider
       // "loademetadata" Event https://www.w3schools.com/tags/av_event_loadedmetadata.asp
       audio.addEventListener(
@@ -232,7 +241,7 @@ export default {
         if (this.isPlaying) {
           var audio = this.$refs.player;
           this.initSlider();
-          //console.log("Audio playback started.");
+          ////console.log("Audio playback started.");
 
           //prevent starting multiple listeners at the same time
           if (!this.listenerActive) {
