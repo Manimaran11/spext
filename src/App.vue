@@ -1,6 +1,6 @@
 <template>
   <div class="flex-container card-wrap ahover">
-    <div id="album-id" class="album flex-container card" @mouseover="shuffle">
+    <div id="album-id" class="album flex-container" @mouseover="shuffle">
       <div class="album-pic-container">
         <img :src="images.codex" class="album-pic" />
       </div>
@@ -27,7 +27,7 @@
       </div>
     </div>
     <!-- </div> -->
-    <div id="album-play" class="album-player card" @mouseover="shuffle1">
+    <div id="album-play" class="album-player" @mouseover="shuffle1">
       <div class="flex-container album-player-container">
         <div class="play-left-container">
           <img class="player-options" :src="images.shuffle" />

@@ -1,11 +1,18 @@
-import { createApp } from 'vue'
+import Vue from 'vue'
 import App from './App.vue'
 import AudioPlayer from './components/AudioPlayer.vue'
+import { BootstrapVue } from 'bootstrap-vue'
 
-// Vue.component('audio-player', AudioPlayer);
+// Import Bootstrap an BootstrapVue CSS files (order is important)
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-var app = createApp(App);
-app.component('audio-player',AudioPlayer)
-app.mount("#app")
+Vue.component('audio-player', AudioPlayer);
+Vue.use(BootstrapVue);
+
+new Vue({
+    el: '#app',
+    render: h => h(App)
+  })
 
 require('./freqtimeupdate.js')
