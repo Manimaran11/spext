@@ -39,7 +39,7 @@ html, body {
 
 .album-player {			
 	margin-left: -10%;
-	padding: 2%;
+	padding: 2% 2% 0 2%;
 	border: 1px solid #FFFFFF;
 	box-sizing: border-box;
 	box-shadow: 0px 60px 100px rgba(65, 44, 100, 0.3);
@@ -151,6 +151,7 @@ html, body {
     margin-left: .5rem;
     width: 3.1rem;
     height: 3.1rem;
+	background-size: 50% 50%;
 	border-radius: 30px;
 	background-repeat: no-repeat;
 	background: #F8F8F8;
@@ -168,24 +169,28 @@ html, body {
 	background-image: url(../images/like_purp.svg);
 	background-repeat: no-repeat;
 	background-position: center;
+	background-size: 50% 50%;
 }
 
 .like-grey {
 	background-image: url(../images/like_grey.svg);
 	background-repeat: no-repeat;
 	background-position: center;
+	background-size: 50% 50%;
 }
 
 .share-grey {
 	background-image: url(../images/share_grey.svg);
 	background-repeat: no-repeat;
 	background-position: center;
+	background-size: 50% 50%;
 }
 
 .add-grey {
 	background-image: url(../images/add_grey.svg);
 	background-repeat: no-repeat;
 	background-position: center;
+	background-size: 50% 50%;
 }
 
 .playing-text {
@@ -266,7 +271,7 @@ html, body {
 
 .play-left-container{
 	justify-self: flex-start;
-	margin:0px 20px;		
+	margin:0px 1rem;		
 
 }
 
@@ -278,7 +283,7 @@ html, body {
 
 .play-end-container{
 	justify-self: flex-end;
-	margin-left: 30px;
+	margin-left: 1rem;
 }
 
 .player-options{
@@ -351,7 +356,39 @@ margin-top: 40px;
 }
 
 @media (max-width: 760px){
+	.ellipsis-container{
+		width: 2.1rem;
+		height: 2.1rem;
+	}
+	.album{
+		width: 90%;
+	}
 	.album-player{
-		margin-left: 20%;
+		margin-left: 7%;
+		margin-top: -70%;
+	}
+	.play-end-container{
+		margin-left: 0px;
+	}
+	.song-title{
+		font-size: 1.1rem;
+	}
+	.artist-name{
+		font-size: .9rem;
+	}
+	.artist2-name{
+		font-size: .8rem;
+	}
+	.playing-text{
+		font-size: .9rem;
+	}
+}
+@media (max-width: 415px){
+	.ellipsis-container{
+		width: 1.5rem;
+		height: 1.5rem;
+	}
+	.album-player{		
+		margin-top: -100%;
 	}
 }

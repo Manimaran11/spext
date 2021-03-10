@@ -4,7 +4,7 @@
     <div class="row h-100 align-items-center">
       <div
         id="album-id"
-        class="col-lg-6 col-md-6 col-sm-10 album flex-container"
+        class="col-lg-6 col-md-6 col-sm-10 col-11 album flex-container"
         @mouseover="shuffle"
       >
         <div class="col-6 align-self-center">
@@ -23,8 +23,8 @@
             <div class="artist2-name">{{ artist2 }}</div>
           </div>
           <div
-            style="margin-left: -10px"
-            class="row justify-flex-start align-items-center"
+            style="margin-left: -10px;"
+            class="flex-container justify-flex-start align-items-center"
           >
             <div
               id="like-song"
@@ -40,7 +40,7 @@
 
       <div
         id="album-play"
-        class="album-player col-lg-7 col-md-7 col-sm-8"
+        class="album-player col-lg-7 col-md-7 col-sm-8 col-11"
         @mouseover="shuffle1"
       >
         <div class="flex-container album-player-container">
