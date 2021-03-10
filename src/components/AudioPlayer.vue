@@ -2,7 +2,12 @@
   <div id="audio-player-root">
     <!-- Hide the default audio player -->
     <div>
-      <audio v-on:ended="onEnd" style="display: none" ref="player" :id="playerid">
+      <audio
+        v-on:ended="onEnd"
+        style="display: none"
+        ref="player"
+        :id="playerid"
+      >
         <source :src="currUrl" type="audio/mpeg" />
       </audio>
     </div>
@@ -19,12 +24,11 @@
     <div
       v-show="audioLoaded"
       class="flex-container"
-      style="justify-content:space-between;margin-top: 12px;color:#AA9BBE"
+      style="justify-content: space-between; margin-top: 12px; color: #aa9bbe"
     >
-      <span class="text-sm" v-html="elapsedTime()">
-      </span>
+      <span class="text-sm" v-html="elapsedTime()"> </span>
 
-      <span class="text-sm"  v-html="totalTime()"> </span>
+      <span class="text-sm" v-html="totalTime()"> </span>
     </div>
 
     <!-- outer gray border -->
@@ -86,11 +90,9 @@ export default {
     //Display the audio time elapsed so far
     elapsedTime() {
       var audio = this.$refs.player;
-      //console.log(audio);
       if (audio) {
         var seconds = audio.currentTime;
         this.setCSSProperty();
-        // audioPlayerContainer.style.setProperty('--seek-before-width', `${seekSlider.value / seekSlider.max * 100}%`);
         return this.convertTime(seconds);
       } else {
         return "00:00";
@@ -103,8 +105,6 @@ export default {
 
       //Sync local 'playbackTime' var to audio.currentTime and update global state
       this.playbackTime = audio.currentTime;
-
-      ////console.log("update: " + audio.currentTime);
 
       //Add listeners for audio pause and audio end events
       audio.addEventListener("ended", this.endListener);
@@ -160,12 +160,12 @@ export default {
         ((inputElement.value - inputElement.min) /
           (inputElement.max - inputElement.min)) *
         100;
-      inputElement.style.setProperty("--webkitProgressPercent", `${percent}%`);  
+      inputElement.style.setProperty("--webkitProgressPercent", `${percent}%`);
     },
     onEnd() {
       this.isPlaying = false;
-      this.$emit('audio-ended')
-    }
+      this.$emit("audio-ended");
+    },
   },
   mounted: function () {
     // nextTick code will run only after the entire view has been rendered
@@ -234,6 +234,11 @@ export default {
   -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
   /* transition: opacity .2s; */
 }
+/* .slider:first-child {
+  padding: 6px;
+  background: #dedde3;
+  border-radius: 24px;
+} */
 .slider:hover {
   opacity: 1; /* Fully shown on mouse-over */
 }
@@ -276,7 +281,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
   height: 10px;
   border-radius: 20px;
-  cursor: pointer;  
+  cursor: pointer;
   box-shadow: -3px -3px 5px #ffffff, 3px 3px 5px rgba(0, 0, 0, 0.05),
     inset 3px 3px 5px rgba(0, 0, 0, 0.05), inset -3px -3px 5px #ffffff;
 }
@@ -286,7 +291,7 @@ input[type="range"]::-moz-range-progress {
   background-color: #5d24d6;
   width: 100%;
   height: 7px;
-  border-radius: 20px;  
+  border-radius: 20px;
   box-shadow: 0px 3px 5px rgba(98, 75, 242, 0.63),
     inset 10px 10px 15px rgba(255, 255, 255, 0.2);
   cursor: pointer;

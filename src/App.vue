@@ -1,85 +1,112 @@
 <template>
-  <div class="flex-container card-wrap ahover">
-    <div id="album-id" class="album flex-container" @mouseover="shuffle">
-      <div class="album-pic-container">
-        <img :src="images.codex" class="album-pic" />
-      </div>
-      <div class="album-detail-container">
-        <div class="playing-text">Now Playing</div>
-        <div id="album-detail" class="song-detail">
-          <div class="song-title">{{ song_title }}</div>
-          <div class="artist-name">{{ artist }}</div>
-          <div class="artist2-name">{{ artist2 }}</div>
+  <!-- <div class="row" style="height: inherit;"> -->
+  <div class="container-fluid card-wrap ahover">
+    <div class="row h-100 align-items-center">
+      <div
+        id="album-id"
+        class="col-lg-6 col-md-6 col-sm-10 album flex-container"
+        @mouseover="shuffle"
+      >
+        <div class="col-6 align-self-center">
+          <b-img          
+            thumbnail
+            fluid            
+            :src="images.codex"
+            class="album-pic rounded-border"
+          />
         </div>
-        <div
-          style="align-items: center; margin-left: -10px"
-          class="flex-container"
-        >
-          <div
-            id="like-song"
-            @click="togglelike"
-            v-bind:class="[liked ? 'like-purp' : 'like-grey']"
-            class="ellipsis-container"
-          ></div>
-          <div class="ellipsis-container add-grey"></div>
-          <div class="ellipsis-container share-grey"></div>
-        </div>
-      </div>
-    </div>
-    <!-- </div> -->
-    <div id="album-play" class="album-player" @mouseover="shuffle1">
-      <div class="flex-container album-player-container">
-        <div class="play-left-container">
-          <img class="player-options" :src="images.shuffle" />
-          <img class="player-options" @click="loopAll = !loopAll" :src="[loopAll ? images.loop_all_active : images.loop_all ]" />
-        </div>
-        <div class="play-middle-container flex-container">
-          <div
-            @click="playprev"
-            class="player-options player-next-container album-action-circle"
-          >
-            <div
-              :class="{ disabled: !loopAll && currPlayInd == 0 }"
-              class="purp-circle player-prev"
-            ></div>
+        <div class="album-detail-container col-6">
+          <div class="playing-text">Now Playing</div>
+          <div id="album-detail" class="song-detail">
+            <div class="song-title">{{ song_title }}</div>
+            <div class="artist-name">{{ artist }}</div>
+            <div class="artist2-name">{{ artist2 }}</div>
           </div>
           <div
-            @click="playpause"
-            class="player-options album-action-circle"
-            style="width: 65px; height: 65px"
+            style="margin-left: -10px"
+            class="row justify-flex-start align-items-center"
           >
             <div
-              :class="[playing ? 'player-play' : 'player-pause']"
-              class="purp-circle"
+              id="like-song"
+              @click="togglelike"
+              v-bind:class="[liked ? 'like-purp' : 'like-grey']"
+              class="ellipsis-container"
             ></div>
+            <div class="ellipsis-container add-grey"></div>
+            <div class="ellipsis-container share-grey"></div>
           </div>
-          <div
-            @click="playnext"
-            class="player-options player-next-container album-action-circle"
-          >
-            <div
-              :class="{ disabled: !loopAll && currPlayInd == urls.length - 1 }"
-              class="purp-circle player-next"
-            ></div>
-          </div>
-        </div>
-        <div class="play-end-container">
-          <img class="player-options" @click="loopCurr = !loopCurr" :src="[loopCurr ? images.loop_active : images.loop]" />
-          <img class="player-options" :src="images.playlist" />
         </div>
       </div>
 
-      <div id="app1" class="audio-container">
-        <audio-player
-          @audio-ended="audioDone"
-          ref="audioComponent"
-          :url="urls"
-          playerid="audio-player"
-        >
-        </audio-player>
+      <div
+        id="album-play"
+        class="album-player col-lg-7 col-md-7 col-sm-8"
+        @mouseover="shuffle1"
+      >
+        <div class="flex-container album-player-container">
+          <div class="play-left-container">
+            <img class="player-options" :src="images.shuffle" />
+            <img
+              class="player-options"
+              @click="loopAll = !loopAll"
+              :src="[loopAll ? images.loop_all_active : images.loop_all]"
+            />
+          </div>
+          <div class="play-middle-container flex-container">
+            <div
+              @click="playprev"
+              class="player-options player-next-container album-action-circle"
+            >
+              <div
+                :class="{ disabled: !loopAll && currPlayInd == 0 }"
+                class="purp-circle player-prev"
+              ></div>
+            </div>
+            <div
+              @click="playpause"
+              class="player-options album-action-circle"
+              style="width: 65px; height: 65px"
+            >
+              <div
+                :class="[playing ? 'player-play' : 'player-pause']"
+                class="purp-circle"
+              ></div>
+            </div>
+            <div
+              @click="playnext"
+              class="player-options player-next-container album-action-circle"
+            >
+              <div
+                :class="{
+                  disabled: !loopAll && currPlayInd == urls.length - 1,
+                }"
+                class="purp-circle player-next"
+              ></div>
+            </div>
+          </div>
+          <div class="play-end-container">
+            <img
+              class="player-options"
+              @click="loopCurr = !loopCurr"
+              :src="[loopCurr ? images.loop_active : images.loop]"
+            />
+            <img class="player-options" :src="images.playlist" />
+          </div>
+        </div>
+
+        <div id="app1" class="audio-container">
+          <audio-player
+            @audio-ended="audioDone"
+            ref="audioComponent"
+            :url="urls"
+            playerid="audio-player"
+          >
+          </audio-player>
+        </div>
       </div>
     </div>
   </div>
+  <!-- </div> -->
 </template>
 
 <style>
@@ -144,11 +171,11 @@ export default {
     },
     playpause: function () {
       // console.log("called playpause", this.$refs);
-      this.playing = !this.playing;      
+      this.playing = !this.playing;
       this.$refs.audioComponent.toggleAudio();
     },
-    playnext: function () {      
-      if(this.loopAll && this.currPlayInd == this.urls.length-1){
+    playnext: function () {
+      if (this.loopAll && this.currPlayInd == this.urls.length - 1) {
         this.currPlayInd = -1;
       }
       if (this.currPlayInd <= this.urls.length - 2) {
@@ -160,7 +187,7 @@ export default {
       }
     },
     playprev: function () {
-       if(this.loopAll && this.currPlayInd == 0){
+      if (this.loopAll && this.currPlayInd == 0) {
         this.currPlayInd = this.urls.length;
       }
       if (this.currPlayInd >= 1) {
@@ -169,12 +196,12 @@ export default {
         this.playing = true;
       }
     },
-    audioDone(){
-      if(this.loopCurr){
+    audioDone() {
+      if (this.loopCurr) {
         this.currPlayInd--;
       }
-      this.playnext()
-    }
+      this.playnext();
+    },
   },
 };
 </script>
