@@ -8,9 +8,9 @@
         @mouseover="shuffle"
       >
         <div class="col-6 align-self-center">
-          <b-img          
+          <b-img
             thumbnail
-            fluid            
+            fluid
             :src="images.codex"
             class="album-pic rounded-border"
           />
@@ -23,7 +23,7 @@
             <div class="artist2-name">{{ artist2 }}</div>
           </div>
           <div
-            style="margin-left: -10px;"
+            style="margin-left: -10px"
             class="flex-container justify-flex-start align-items-center"
           >
             <div
@@ -53,35 +53,26 @@
             />
           </div>
           <div class="play-middle-container flex-container">
-            <div
-              @click="playprev"
-              class="player-options player-next-container album-action-circle"
-            >
-              <div
-                :class="{ disabled: !loopAll && currPlayInd == 0 }"
-                class="purp-circle player-prev"
-              ></div>
+            <div @click="playprev" class="test">
+              <a
+                :class="{ 'disabled-prev': !loopAll && currPlayInd == 0 }"
+                class="player-prev"
+              ></a>
             </div>
-            <div
-              @click="playpause"
-              class="player-options album-action-circle"
-              style="width: 65px; height: 65px"
-            >
-              <div
+            <div @click="playpause" class="test">
+              <a
+                class="btnc"
                 :class="[playing ? 'player-play' : 'player-pause']"
-                class="purp-circle"
-              ></div>
+              ></a>
             </div>
-            <div
-              @click="playnext"
-              class="player-options player-next-container album-action-circle"
-            >
-              <div
+
+            <div @click="playnext" class="test">
+              <a
                 :class="{
-                  disabled: !loopAll && currPlayInd == urls.length - 1,
+                  'disabled-next': !loopAll && currPlayInd == urls.length - 1,
                 }"
-                class="purp-circle player-next"
-              ></div>
+                class="player-next"
+              ></a>
             </div>
           </div>
           <div class="play-end-container">
