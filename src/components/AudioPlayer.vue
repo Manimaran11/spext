@@ -22,7 +22,6 @@
     />
 
     <div
-      v-show="audioLoaded"
       class="flex-container"
       style="justify-content: space-between; margin-top: 12px; color: #aa9bbe"
     >
@@ -68,6 +67,8 @@ export default {
 
     //Convert audio current time from seconds to min:sec display
     convertTime(seconds) {
+      if(!seconds)
+        return "0:00"
       const format = (val) => `0${Math.floor(val)}`.slice(-2);
       // var hours = seconds / 3600;
       var minutes = (seconds % 3600) / 60;
