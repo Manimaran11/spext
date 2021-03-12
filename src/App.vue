@@ -40,7 +40,7 @@
 
       <div
         id="album-play"
-        class="album-player col-lg-7 col-md-7 col-sm-8 col-11"
+        class="album-player col-lg-7 col-md-7 col-sm-10 col-11"
         @mouseover="shuffle1"
       >
         <div class="flex-container album-player-container">
