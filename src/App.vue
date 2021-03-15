@@ -7,12 +7,12 @@
         class="col-lg-6 col-md-6 col-sm-10 col-11 album flex-container"
         @mouseover="shuffle"
       >
-        <div class="col-6 align-self-center">
-          <b-img
+        <div class="col-6 align-self-center album-pic-container">
+          <img
             thumbnail
             fluid
             :src="images.codex"
-            class="album-pic rounded-border"
+            class=" rounded-border album-pic"
           />
         </div>
         <div class="album-detail-container col-6">

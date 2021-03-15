@@ -67,8 +67,7 @@ export default {
 
     //Convert audio current time from seconds to min:sec display
     convertTime(seconds) {
-      if(!seconds)
-        return "0:00"
+      if (!seconds) return "0:00";
       const format = (val) => `0${Math.floor(val)}`.slice(-2);
       // var hours = seconds / 3600;
       var minutes = (seconds % 3600) / 60;
@@ -226,41 +225,38 @@ export default {
 .slider {
   -webkit-appearance: none; /* Override default CSS styles */
   appearance: none;
-  outline: none; /* Remove outline */
+  outline: none;
   margin: auto;
   width: 100%;
   border-radius: 15px;
   height: 13px;
   --webkitProgressPercent: 0%;
-  -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
-  /* transition: opacity .2s; */
 }
 
 .slider:hover {
   opacity: 1; /* Fully shown on mouse-over */
 }
+
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   box-sizing: content-box;
-  border: 4px solid #fff;
-  height: 12px;
-  width: 12px;
+  border: .4rem solid #fff;
+  height: .9rem;
+  width: .9rem;
   border-radius: 50%;
   background-color: #5d24d6;
-  /* background-image: linear-gradient(-180deg, #917CE4 0%, #5D24D6 100%);     */
-	
-  background-image: linear-gradient(-180deg, #917CE4 0%, #5D24D6 100%);    
-	/* box-shadow: 0px 5px 5px 0px rgb(0 0 0 / 15%), 0px 6px 4px 0px rgb(0 0 0 / 10%), 0px 2px 2px 0px rgb(0 0 0 / 20%), inset 0px -3px 0px 0px rgb(0 0 0 / 10%); */
-  box-shadow: 0px 3px 5px rgba(98, 75, 242, 0.63),inset 10px 10px 15px rgba(255, 255, 255, 0.2);
+  background-image: linear-gradient(-180deg, #917ce4 0%, #5d24d6 100%);
+  box-shadow: 2px 3px 10px 3px rgb(98 75 242 / 63%), inset 10px 10px 15px rgb(255 255 255 / 20%);
   cursor: pointer;
   margin: -8px 0 0 0;
 }
+
 .slider::-moz-range-thumb {
   -webkit-appearance: none;
   box-sizing: content-box;
   border: 7px solid #fff;
-  height: 15px;
-  width: 15px;
+  height: 13px;
+  width: 13px;
   border-radius: 50%;
   background-color: #5d24d6;
   background: linear-gradient(327.56deg, #5d24d6 19.23%, #7e74ed 81.76%);
@@ -278,7 +274,7 @@ input[type="range"]::-webkit-slider-runnable-track {
     #dedde3 var(--webkitProgressPercent)
   );
   width: 100%;
-  height: 10px;
+  height: 14px;
   border-radius: 20px;
   cursor: pointer;
   box-shadow: -3px -3px 5px #ffffff, 3px 3px 5px rgba(0, 0, 0, 0.05),
